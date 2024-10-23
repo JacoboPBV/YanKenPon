@@ -5,13 +5,13 @@ from tkinter import messagebox
 
 main = tk.Tk()
 main.title("Piedra, papel, tijera")
-main.geometry("200x100")
+main.geometry("200x100+50+50")
 
 
 def nueva_partida_vs_ia():
     root = tk.Toplevel()
     root.title("Jugador vs IA")
-    root.geometry("800x600")
+    root.geometry("800x600+300+50")
 
     def jugar_piedra():
         value_jugada_player.set("Piedra")
@@ -136,7 +136,122 @@ def nueva_partida_vs_ia():
 def nueva_partida_vs_jugador():
     root = tk.Toplevel()
     root.title("Jugador vs Jugador")
-    root.geometry("800x600")
+    root.geometry("800x600+300+50")
+
+    def jugar_piedra():
+        value_jugada_player[turno.get() - 1] = "Piedra"
+        if turno.get() == 1:
+            turno.set(2)
+        else:
+            añadir_puntos(elegir_ganador())
+            turno.set(1)
+
+    def jugar_papel():
+        value_jugada_player[turno.get() - 1] = "Papel"
+        if turno.get() == 1:
+            turno.set(2)
+        else:
+            añadir_puntos(elegir_ganador())
+            turno.set(1)
+
+    def jugar_tijeras():
+        value_jugada_player[turno.get() - 1] = "Tijeras"
+        if turno.get() == 1:
+            turno.set(2)
+        else:
+            añadir_puntos(elegir_ganador())
+            turno.set(1)
+
+    def elegir_ganador():
+        resultado = None
+        if value_jugada_player[0] == "Piedra":
+            if value_jugada_player[1] == "Piedra":
+                resultado = 0
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Es un empate.")
+            elif value_jugada_player[1] == "Papel":
+                resultado = -1
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 2.")
+            elif value_jugada_player[1] == "Tijeras":
+                resultado = 1
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 1.")
+        elif value_jugada_player[0] == "Papel":
+            if value_jugada_player[1] == "Piedra":
+                resultado = 1
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 1.")
+            elif value_jugada_player[1] == "Papel":
+                resultado = 0
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Es un empate.")
+            elif value_jugada_player[1] == "Tijeras":
+                resultado = -1
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 2.")
+        elif value_jugada_player[0] == "Tijeras":
+            if value_jugada_player[1] == "Piedra":
+                resultado = -1
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 2.")
+            elif value_jugada_player[1] == "Papel":
+                resultado = 1
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 1.")
+            elif value_jugada_player[1] == "Tijeras":
+                resultado = 0
+                messagebox.showinfo("",
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Es un empate.")
+        else:
+            messagebox.showinfo("Error inesperado", "Cerrando la aplicación...")
+            root.quit()
+
+        return resultado
+
+    def añadir_puntos(res):
+        if res > 0:
+            puntos_player1.set(puntos_player1.get() + 1)
+            puntuacion_jugador1.config(text="PUNTUACIÓN JUGADOR 1: " + str(puntos_player1.get()))
+        elif res < 0:
+            puntos_player2.set(puntos_player2.get() + 1)
+            puntuacion_jugador2.config(text="PUNTUACIÓN JUGADOR 2: " + str(puntos_player2.get()))
+
+        if puntos_player2.get() == 3 or puntos_player1.get() == 3:
+            if puntos_player2.get() == 3:
+                messagebox.showinfo("Partida terminada", "GANADOR: Jugador 2")
+            else:
+                messagebox.showinfo("Partida terminada", "GANADOR: Jugador 1")
+
+            root.destroy()  # Cierra la partida, pero no la aplicación
+
+    tk.Label(root).grid(row=0, column=0)
+
+    value_jugada_player = ["", ""]
+    turno = tk.IntVar()
+    turno.set(1)
+    puntos_player1 = tk.IntVar()
+    puntos_player1.set(0)
+    puntos_player2 = tk.IntVar()
+    puntos_player2.set(0)
+
+    puntuacion_jugador1 = tk.Label(root, text="PUNTUACIÓN JUGADOR 1: " + str(puntos_player1.get()))
+    puntuacion_jugador1.grid(row=1, column=1, columnspan=2, pady=20)
+    puntuacion_jugador2 = tk.Label(root, text="PUNTUACIÓN JUGADOR 2: " + str(puntos_player2.get()))
+    puntuacion_jugador2.grid(row=1, column=4, columnspan=2, pady=20)
+    piedra = tk.Button(root, text="PIEDRA", command=jugar_piedra)
+    piedra.grid(row=2, column=1, padx=15)
+    papel = tk.Button(root, text="PAPEL", command=jugar_papel)
+    papel.grid(row=2, column=3, padx=15)
+    tijeras = tk.Button(root, text="TIJERAS", command=jugar_tijeras)
+    tijeras.grid(row=2, column=5, padx=15)
+
+    tk.Label(root).grid(row=10, column=10)
+
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(0, weight=1)
+    root.grid_rowconfigure(10, weight=1)
+    root.grid_columnconfigure(10, weight=1)
 
 
 menu = tk.Menu(main)
