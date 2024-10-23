@@ -1,7 +1,11 @@
 import tkinter as tk
+"""
 from math import floor
 from random import random
 from tkinter import messagebox
+"""
+import PvE
+import PvP
 
 # Ventana que va a contener el menú
 main = tk.Tk()
@@ -9,6 +13,32 @@ main.title("Piedra, papel, tijera")
 main.geometry("200x100+50+50")
 
 
+def nuevo_pve():
+    PvE.PvE()
+
+
+def nuevo_pvp():
+    PvP.PvP()
+
+
+def salir():
+    main.destroy()
+
+
+# Menu
+menu = tk.Menu(main)
+main.config(menu=menu)
+
+menu_partida = tk.Menu(menu, tearoff=0)
+menu.add_cascade(label="Partida", menu=menu_partida)
+menu_partida.add_command(label="Nueva Partida vs IA", command=nuevo_pve)
+menu_partida.add_command(label="Nueva partida vs Jugador", command=nuevo_pvp)
+menu.add_command(label="Salir", command=salir)
+
+# Mainloop
+main.mainloop()
+
+"""
 def nueva_partida_vs_ia():
     # Ventana para la partida contra la máquina
     root = tk.Toplevel()
@@ -293,21 +323,4 @@ def nueva_partida_vs_jugador():
     root.grid_columnconfigure(0, weight=1)
     root.grid_rowconfigure(10, weight=1)
     root.grid_columnconfigure(10, weight=1)
-
-
-def salir():
-    main.destroy()
-
-
-# Menu
-menu = tk.Menu(main)
-main.config(menu=menu)
-
-menu_partida = tk.Menu(menu, tearoff=0)
-menu.add_cascade(label="Partida", menu=menu_partida)
-menu_partida.add_command(label="Nueva Partida vs IA", command=nueva_partida_vs_ia)
-menu_partida.add_command(label="Nueva partida vs Jugador", command=nueva_partida_vs_jugador)
-menu.add_command(label="Salir", command=salir)
-
-# Mainloop
-main.mainloop()
+"""
