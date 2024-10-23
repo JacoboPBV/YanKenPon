@@ -277,6 +277,8 @@ def nueva_partida_vs_jugador():
     root.grid_rowconfigure(10, weight=1)
     root.grid_columnconfigure(10, weight=1)
 
+def salir():
+    main.destroy()
 
 menu = tk.Menu(main)
 main.config(menu=menu)
@@ -285,6 +287,7 @@ menu_partida = tk.Menu(menu, tearoff=0)
 menu.add_cascade(label="Partida", menu=menu_partida)
 menu_partida.add_command(label="Nueva Partida vs IA", command=nueva_partida_vs_ia)
 menu_partida.add_command(label="Nueva partida vs Jugador", command=nueva_partida_vs_jugador)
+menu.add_command(label="Salir", command=salir)
 
 # Mainloop
 main.mainloop()
