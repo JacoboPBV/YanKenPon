@@ -142,9 +142,11 @@ def nueva_partida_vs_jugador():
         value_jugada_player[turno.get() - 1] = "Piedra"
         if turno.get() == 1:
             turno.set(2)
+            marcador_turno.config(text="TURNO: JUGADOR " + str(turno.get()))
         else:
             añadir_puntos(elegir_ganador())
             turno.set(1)
+            marcador_turno.config(text="TURNO: JUGADOR " + str(turno.get()))
 
     def jugar_papel():
         value_jugada_player[turno.get() - 1] = "Papel"
@@ -235,16 +237,18 @@ def nueva_partida_vs_jugador():
     puntos_player2 = tk.IntVar()
     puntos_player2.set(0)
 
+    marcador_turno = tk.Label(root, text="TURNO: JUGADOR " + str(turno.get()))
+    marcador_turno.grid(row=1, column=2, columnspan=3)
     puntuacion_jugador1 = tk.Label(root, text="PUNTUACIÓN JUGADOR 1: " + str(puntos_player1.get()))
-    puntuacion_jugador1.grid(row=1, column=1, columnspan=2, pady=20)
+    puntuacion_jugador1.grid(row=2, column=1, columnspan=2, pady=20)
     puntuacion_jugador2 = tk.Label(root, text="PUNTUACIÓN JUGADOR 2: " + str(puntos_player2.get()))
-    puntuacion_jugador2.grid(row=1, column=4, columnspan=2, pady=20)
+    puntuacion_jugador2.grid(row=2, column=4, columnspan=2, pady=20)
     piedra = tk.Button(root, text="PIEDRA", command=jugar_piedra)
-    piedra.grid(row=2, column=1, padx=15)
+    piedra.grid(row=3, column=1, padx=15)
     papel = tk.Button(root, text="PAPEL", command=jugar_papel)
-    papel.grid(row=2, column=3, padx=15)
+    papel.grid(row=3, column=3, padx=15)
     tijeras = tk.Button(root, text="TIJERAS", command=jugar_tijeras)
-    tijeras.grid(row=2, column=5, padx=15)
+    tijeras.grid(row=3, column=5, padx=15)
 
     tk.Label(root).grid(row=10, column=10)
 
