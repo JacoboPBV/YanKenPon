@@ -37,11 +37,13 @@ def nueva_partida_vs_ia():
         elif jugada_IA == 2:
             value_jugada_IA.set("Tijeras")
         else:
+            root.attributes("-disabled", True)
             messagebox.showinfo("Número no encontrado", "Cerrando la aplicación...")
             root.destroy()
 
     def elegir_ganador():
         resultado = None
+        root.attributes("-disabled", True)
         if value_jugada_player.get() == "Piedra":
             if value_jugada_IA.get() == "Piedra":
                 resultado = 0
@@ -85,6 +87,7 @@ def nueva_partida_vs_ia():
             messagebox.showinfo("Error inesperado", "Cerrando la aplicación...")
             root.quit()
 
+        root.attributes("-disabled", False)
         return resultado
 
     def añadir_puntos(res):
@@ -96,6 +99,7 @@ def nueva_partida_vs_ia():
             puntuacion_jugador2.config(text="PUNTUACIÓN IA: " + str(puntos_IA.get()))
 
         if puntos_IA.get() == 3 or puntos_player.get() == 3:
+            root.attributes("-disabled", True)
             if puntos_IA.get() == 3:
                 messagebox.showinfo("Partida terminada", "GANADOR: IA")
             else:
@@ -144,71 +148,86 @@ def nueva_partida_vs_jugador():
             turno.set(2)
             marcador_turno.config(text="TURNO: JUGADOR " + str(turno.get()))
         else:
-            añadir_puntos(elegir_ganador())
             turno.set(1)
             marcador_turno.config(text="TURNO: JUGADOR " + str(turno.get()))
+            añadir_puntos(elegir_ganador())
 
     def jugar_papel():
         value_jugada_player[turno.get() - 1] = "Papel"
         if turno.get() == 1:
             turno.set(2)
+            marcador_turno.config(text="TURNO: JUGADOR " + str(turno.get()))
         else:
-            añadir_puntos(elegir_ganador())
             turno.set(1)
+            marcador_turno.config(text="TURNO: JUGADOR " + str(turno.get()))
+            añadir_puntos(elegir_ganador())
 
     def jugar_tijeras():
         value_jugada_player[turno.get() - 1] = "Tijeras"
         if turno.get() == 1:
             turno.set(2)
+            marcador_turno.config(text="TURNO: JUGADOR " + str(turno.get()))
         else:
-            añadir_puntos(elegir_ganador())
             turno.set(1)
+            marcador_turno.config(text="TURNO: JUGADOR " + str(turno.get()))
+            añadir_puntos(elegir_ganador())
 
     def elegir_ganador():
         resultado = None
+        root.attributes("-disabled", True)
         if value_jugada_player[0] == "Piedra":
             if value_jugada_player[1] == "Piedra":
                 resultado = 0
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Es un empate.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Es un empate.")
             elif value_jugada_player[1] == "Papel":
                 resultado = -1
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 2.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Gana el jugador 2.")
             elif value_jugada_player[1] == "Tijeras":
                 resultado = 1
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 1.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Gana el jugador 1.")
         elif value_jugada_player[0] == "Papel":
             if value_jugada_player[1] == "Piedra":
                 resultado = 1
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 1.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Gana el jugador 1.")
             elif value_jugada_player[1] == "Papel":
                 resultado = 0
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Es un empate.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Es un empate.")
             elif value_jugada_player[1] == "Tijeras":
                 resultado = -1
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 2.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Gana el jugador 2.")
         elif value_jugada_player[0] == "Tijeras":
             if value_jugada_player[1] == "Piedra":
                 resultado = -1
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 2.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Gana el jugador 2.")
             elif value_jugada_player[1] == "Papel":
                 resultado = 1
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Gana el jugador 1.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Gana el jugador 1.")
             elif value_jugada_player[1] == "Tijeras":
                 resultado = 0
                 messagebox.showinfo("",
-                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " + value_jugada_player[1] + ". Es un empate.")
+                                    "El jugador 1 saca " + value_jugada_player[0] + ". El jugador 2 " +
+                                    value_jugada_player[1] + ". Es un empate.")
         else:
             messagebox.showinfo("Error inesperado", "Cerrando la aplicación...")
             root.quit()
 
+        root.attributes("-disabled", False)
         return resultado
 
     def añadir_puntos(res):
@@ -221,6 +240,7 @@ def nueva_partida_vs_jugador():
 
         if puntos_player2.get() == 3 or puntos_player1.get() == 3:
             if puntos_player2.get() == 3:
+                root.attributes("-disabled", True)
                 messagebox.showinfo("Partida terminada", "GANADOR: Jugador 2")
             else:
                 messagebox.showinfo("Partida terminada", "GANADOR: Jugador 1")
